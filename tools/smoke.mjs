@@ -173,6 +173,10 @@ class FakeElement {
   getBoundingClientRect() {
     return { left: 0, top: 0, width: 800, height: 60, right: 800, bottom: 60 }
   }
+
+  get isConnected() {
+    return true
+  }
 }
 
 class FakeDocument {
