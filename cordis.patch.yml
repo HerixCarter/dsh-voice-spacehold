@@ -1,0 +1,8 @@
+# dsh-voice-spacehold 的 bundle 层：往配置树里插一行插件
+#
+# - id   ：这一行的行标识（全局唯一，用包名，避免和别的插件撞）
+# - name ：模块名；解析到本包 lib/index.js（宿主半侧），
+#          浏览器半侧则由 package.json 的 dsh.client 声明经 /plugins 路由提供
+- insert:
+    - id: dsh-voice-spacehold
+      name: dsh-voice-spacehold

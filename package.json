@@ -1,0 +1,56 @@
+{
+  "name": "dsh-voice-spacehold",
+  "version": "0.1.1",
+  "description": "长按空格说话：给 DeepSeek Harness 对话输入框加一层「按住说话」手势，复用官方语音插件的本地识别能力，附带三态动效。",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node tools/smoke.mjs",
+    "check": "node --check lib/client.js && node --check lib/index.js && node --check tools/probe.cjs && node tools/smoke.mjs"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "voice-input",
+    "dictation",
+    "speech-to-text",
+    "space-hold",
+    "lexical",
+    "cordis"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/HerixCarter/dsh-voice-spacehold#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HerixCarter/dsh-voice-spacehold.git"
+  },
+  "bugs": {
+    "url": "https://github.com/HerixCarter/dsh-voice-spacehold/issues"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-conversation"
+      ]
+    }
+  }
+}

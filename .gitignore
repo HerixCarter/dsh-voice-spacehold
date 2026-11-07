@@ -1,0 +1,12 @@
+# macOS
+.DS_Store
+
+# 依赖
+node_modules/
+pnpm-lock.yaml
+
+*.log
+
+# 编辑器
+.idea/
+.vscode/
