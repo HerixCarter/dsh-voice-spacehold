@@ -187,6 +187,10 @@ class FakeDocument {
     this.body.ownerDocument = this
   }
 
+  elementFromPoint() {
+    return globalThis.__topElement || null
+  }
+
   createElement(tag) {
     const el = new FakeElement(tag)
     el.ownerDocument = this
@@ -276,7 +280,9 @@ const window = {
     const index = list.indexOf(handler)
     if (index >= 0) list.splice(index, 1)
   },
-  getSelection: () => ({ removeAllRanges() {}, addRange() {} })
+  getSelection: () => ({ removeAllRanges() {}, addRange() {} }),
+  innerWidth: 1440,
+  innerHeight: 900
 }
 
 /* ---------------------------------------------------------------- 装载插件 */
@@ -372,6 +378,9 @@ const hintShown = () => {
 }
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
+// 「最上层是谁」默认就是编辑器自己（= 没被盖住）
+globalThis.__topElement = editor
+
 const dispose = mod.apply({ logger })
 check('apply 后注入了样式表', !!document.getElementById('dsh-voice-spacehold-style'))
 check('apply 后挂上了浮层', !!document.querySelector('.dsvsh-root'))
@@ -420,7 +429,20 @@ editor.querySelector('p').textContent = '你好'
 document.fire('input', editor)
 check('有内容后提示收起', hintShown() === 'false', hintShown())
 
-// 6) dispose 清理干净
+// 6) 被开屏动画/全屏弹层盖住时：整层藏起来，提示也不显示
+globalThis.__topElement = otherInput // 一个不在卡片里的元素 = 卡片被盖住
+document.fire('input', editor)       // 触发一次刷新
+window.__dshVoiceSpacehold.refreshIdle()
+check('被盖住时浮层隐藏', (document.querySelector('.dsvsh-root') || {}).style.display === 'none',
+  (document.querySelector('.dsvsh-root') || {}).style)
+check('被盖住时不显示提示', hintShown() === 'false', hintShown())
+
+globalThis.__topElement = editor // 开屏结束，卡片重新露出来
+window.__dshVoiceSpacehold.refreshIdle()
+check('露出来后浮层恢复', (document.querySelector('.dsvsh-root') || {}).style.display !== 'none',
+  (document.querySelector('.dsvsh-root') || {}).style)
+
+// 7) dispose 清理干净
 dispose()
 check('dispose 后浮层移除', !document.querySelector('.dsvsh-root'))
 check('dispose 后样式表移除', !document.getElementById('dsh-voice-spacehold-style'))

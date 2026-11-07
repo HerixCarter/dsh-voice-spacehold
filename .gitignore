@@ -10,3 +10,7 @@ pnpm-lock.yaml
 # 编辑器
 .idea/
 .vscode/
+
+# 视频那条线的产物和分镜源码都只放本地，不进仓库
+media/
+video/
