@@ -31,7 +31,7 @@
 github:HerixCarter/dsh-voice-spacehold
 ```
 
-DSH 有 HMR 的话立刻生效，没有就重启一次。装完刷新页面（`Cmd+R`）即可。
+DSH 有 HMR 的话立刻生效，没有就重启一次。注意：页面里 `Cmd+R` **不会**重新加载插件代码，要完全退出 DSH（`Cmd+Q`）再启动。
 
 ### 方式二：手动 link（改代码时用）
 
@@ -55,7 +55,7 @@ ln -sfn "$PWD/dsh-voice-spacehold" ~/.dsh/profiles/<profile>/node_modules/dsh-vo
 }
 ```
 
-改完刷新页面。`bash tools/doctor.sh` 可以确认装没装上。
+改完退出 DSH（`Cmd+Q`）再启动。`bash tools/doctor.sh` 可以确认装没装上。
 
 ## 用法
 
@@ -70,7 +70,7 @@ ln -sfn "$PWD/dsh-voice-spacehold" ~/.dsh/profiles/<profile>/node_modules/dsh-vo
 | 切到别的页面（输入框不在了） | 浮层整层收起，回到对话页自动恢复 |
 | 麦克风不可用 | 边框转琥珀色 + 右上角「麦克风不可用」，2s 自动收起，照常打字 |
 | 开屏动画 / 全屏弹层盖住输入框 | 浮层整层收起，不会飘在开屏画面上；露出来后自动恢复 |
-| 输入框为空时 | 右上角一行弱化小字「长按空格 语音输入」，一有内容就消失 |
+| 输入框为空时 | 右上角一行弱化小字「长按空格 语音输入」；窄到放不下就退成一个小话筒图标，一有内容就消失 |
 
 ![空草稿时的提示](docs/preview-idle.png)
 
@@ -161,7 +161,7 @@ rm ~/.dsh/profiles/<profile>/node_modules/dsh-voice-spacehold
 通常什么都不用做。真出问题按这个顺序查：
 
 1. 长按空格试一次 —— 能用就不用管。
-2. `Cmd+R` 刷新页面。
+2. 完全退出 DSH（`Cmd+Q`）后重新打开。
 3. `bash tools/doctor.sh` → 缺登记就按安装步骤补回去。
 4. 全 ✅ 但页面没反应 → 跑 `tools/probe.cjs` 看哪条 FAIL：
    「找不到听写按钮」「原语音插件进入 recording」失败 = 原生插件的 DOM/文案变了；

@@ -1,6 +1,6 @@
 {
   "name": "dsh-voice-spacehold",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "长按空格说话：给 DeepSeek Harness 对话输入框加一层「按住说话」手势，复用官方语音插件的本地识别能力，附带三态动效。",
   "type": "module",
   "main": "lib/index.js",
