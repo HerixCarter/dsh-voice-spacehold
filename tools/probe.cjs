@@ -127,9 +127,11 @@ async function main() {
     console.log(`${ok ? 'PASS' : 'FAIL'}  ${name}${detail === undefined ? '' : `  ${JSON.stringify(detail)}`}`)
   }
   // dsh-fairy-zzz 的待机屏会把整页盖住，截图前先收起来
+  // 开屏动画/待机屏每一版 DOM 都不一样：video、fz3-（待机屏）、dsvs（开屏层）都清掉
   const maskOff = () => js(`
-    for (const sel of ['.fz3-screen', '.fz3-layer']) {
-      for (const el of document.querySelectorAll(sel)) el.style.display = 'none'
+    // 注意别写 [class*="dsvs"]：会连插件自己的 .dsvsh-root 一起删掉
+    for (const sel of ['.fz3-screen', '.fz3-layer', 'video', '[class*="fz3-"]', '[class*="dsvs-boot"]', '[class*="dsvs-boot"]']) {
+      for (const el of document.querySelectorAll(sel)) el.remove()
     }
     return true
   `)
